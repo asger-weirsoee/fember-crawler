@@ -2,6 +2,7 @@ import datetime
 import re
 
 import scrapy
+
 from scrapy.settings import Settings
 
 
@@ -36,10 +37,10 @@ class BlogSpider(scrapy.Spider):
     start_urls = ['https://stregsystem.fklub.dk/10/user/' + str(k) for k in range(10, 1_000_000)]
     custom_settings = {
         "RETRY_ENABLED": False,
+        "LOG_LEVEL": "INFO",
     }
 
-    def parse(self, response, **kwargs):
-        print(response.url)
+    def parse(self, response: , **kwargs):
         fember = Fember()
         balance: str = response.css('h4::text').get()
 
