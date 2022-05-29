@@ -3,8 +3,6 @@ import re
 
 import scrapy
 
-from scrapy.settings import Settings
-
 
 class Fember:
     id: str = None
@@ -29,7 +27,7 @@ class Fember:
                '", "balance": "' + self.remove_td(self.balance) + '", "year": "' + self.remove_td(
             self.year) + \
                '", "last_pay": "' + self.remove_td(
-            self.last_pay) + '", "last_pay_date": "' + self.last_pay_date.isoformat() + '"}'
+            self.last_pay) + '", "last_pay_date": "' + self.last_pay_date.isoformat() if self.last_pay_date else "" + '"}'
 
 
 class BlogSpider(scrapy.Spider):
@@ -40,7 +38,7 @@ class BlogSpider(scrapy.Spider):
         "LOG_LEVEL": "INFO",
     }
 
-    def parse(self, response: , **kwargs):
+    def parse(self, response, **kwargs):
         fember = Fember()
         balance: str = response.css('h4::text').get()
 
