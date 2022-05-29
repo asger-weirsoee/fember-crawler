@@ -2,6 +2,7 @@ import datetime
 import re
 
 import scrapy
+from scrapy.settings import Settings
 
 
 class Fember:
@@ -17,7 +18,7 @@ class Fember:
 
     def remove_td(self, td):
         if td is None:
-            return None
+            return ""
         return td.replace('<td>', '').replace('</td>', '')
 
     def __str__(self):
@@ -33,6 +34,9 @@ class Fember:
 class BlogSpider(scrapy.Spider):
     name = 'blogspider'
     start_urls = ['https://stregsystem.fklub.dk/10/user/' + str(k) for k in range(10, 1_000_000)]
+    custom_settings = {
+        "RETRY_ENABLED": False,
+    }
 
     def parse(self, response, **kwargs):
         print(response.url)
